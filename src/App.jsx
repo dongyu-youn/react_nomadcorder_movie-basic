@@ -1,41 +1,32 @@
 import Button from "./Button";
 import styles from "./module.css";
-import React, { useState, userEffect, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [minuates, setMinuates] = React.useState(0);
-  const [flipped, setFlipped] = React.useState(false);
-  const onChange = (e) => {
-    e.preventDefault();
-    setMinuates(e.target.value);
-  };
-  const reset = () => setMinuates(0);
-  const onFlip = () => setFlipped((current) => !current);
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/v1/post/")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+    console.log(coins);
+  }, []);
 
   return (
     <div>
-      <h1>Super Converter</h1>
-      <label htmlFor="minuates">Minutes</label>
-      <input
-        value={minuates}
-        id="minuates"
-        placeholder="Minuates"
-        type="number"
-        onChange={onChange}
-        disabled={flipped === true}
-      />
-      <h4>You want to convert {minuates}</h4>
-      <label htmlFor="hours">Minutes</label>
-      <input
-        value={flipped ? minuates : Math.round(minuates / 60)}
-        id="hours"
-        placeholder="Hours"
-        type="number"
-        onChange={onChange}
-        disabled={flipped === false}
-      />
-      <button onClick={reset}>reset</button>
-      <button onClick={onFlip}>flip</button>
+      <h1>The Coins!</h1>
+      {loading ? (
+        <strong>Loading...</strong>
+      ) : (
+        <select>
+          {coins.results.map((coin) => (
+            <option>{coin.title}</option>
+          ))}
+        </select>
+      )}
     </div>
   );
 }

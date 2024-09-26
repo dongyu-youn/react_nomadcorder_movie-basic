@@ -1,5 +1,8 @@
 # Getting Started with Create React App
 
+![캡처3](https://github.com/user-attachments/assets/96708a69-b163-4330-bb56-7898ba579ed7)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
